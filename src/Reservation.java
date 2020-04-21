@@ -1,5 +1,14 @@
 public class Reservation {
 
+    /*
+    * (ReservationID CHAR(7) PRIMARY KEY,
+    TripID DECIMAL(3,0),
+    TripDate DATE,
+    NumPersons DECIMAL(3,0),
+    TripPrice DECIMAL(6,2),
+    OtherFees DECIMAL(6,2),
+    CustomerNum CHAR(4) );
+    * */
     private String reservationID;
     private double tripID;
     private String tripDate;

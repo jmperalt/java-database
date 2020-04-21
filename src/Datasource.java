@@ -1,17 +1,10 @@
-
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Datasource {
-    // public static final String URL = "jdbc:sqlite:e:/work/sqlite/db/course.db";
-    //  C:/Users/jayso/Desktop/CS411 Database/sqlitefiles/courseapp/db/course.db"
-    // C:/work/courseapp/db/course.db
-    //C:/work/sqlite/jmperalt-db/colonial.db
     public static final String URL = "jdbc:sqlite:C:/work/sqlite/jmperalt-db/colonial.db";
     private Connection conn;
-
     public boolean open() {
         try {
             conn = DriverManager.getConnection(URL);
@@ -34,9 +27,9 @@ public class Datasource {
     }
 
     public List<Trip> getTrip() {
-      //  String queryTrip = "FROM Trip INNER JOIN (Customer INNER JOIN Reservation ON Customer.CustomerNum = Reservation.CustomerNum) ON Trip.TripID = Reservation.TripID;";
+       String queryTrip = "Trip";
         try(Statement stmt = conn.createStatement();
-            ResultSet results = stmt.executeQuery("SELECT * FROM Trip;")) {
+            ResultSet results = stmt.executeQuery("SELECT * FROM " + queryTrip)) {
             List<Trip> trip = new ArrayList<>();
             while(results.next()) {
                 Trip tr = new Trip();
@@ -51,9 +44,9 @@ public class Datasource {
 
     }
     public List<Customer> getCustomers() {
-    //    String queryCustomer = "FROM Trip INNER JOIN (Customer INNER JOIN Reservation ON Customer.CustomerNum = Reservation.CustomerNum) ON Trip.TripID = Reservation.TripID;";
+       String queryCustomer = "Customer";
         try(Statement stmt = conn.createStatement();
-            ResultSet results = stmt.executeQuery("SELECT * FROM Customer;")) {
+            ResultSet results = stmt.executeQuery("SELECT * FROM " + queryCustomer)) {
             List<Customer> customers = new ArrayList<>();
             while(results.next()) {
                 Customer ct = new Customer();
@@ -65,12 +58,11 @@ public class Datasource {
             System.out.println("Query failed: " + e.getMessage());
             return null;
         }
-
     }
     public List<Reservation> getReservations() {
-    //    String queryReservation = "FROM Trip INNER JOIN (Customer INNER JOIN Reservation ON Customer.CustomerNum = Reservation.CustomerNum) ON Trip.TripID = Reservation.TripID;";
+        String queryReservation = "Reservation";
         try(Statement stmt = conn.createStatement();
-            ResultSet results = stmt.executeQuery("SELECT * FROM Reservation;")) {
+            ResultSet results = stmt.executeQuery("SELECT * FROM " + queryReservation)) {
             List<Reservation> reservations = new ArrayList<>();
             while(results.next()) {
                 Reservation rv = new Reservation();
@@ -82,6 +74,21 @@ public class Datasource {
             System.out.println("Query failed: " + e.getMessage());
             return null;
         }
-
+    }
+    public List<Guide> getGuide() {
+        String queryGuide =  "Guide";
+        try(Statement stmt = conn.createStatement();
+            ResultSet results = stmt.executeQuery("SELECT * FROM " + queryGuide)) {
+            List<Guide> guides = new ArrayList<>();
+            while(results.next()) {
+                Guide rv = new Guide();
+                rv.setFirstName(results.getString(3));
+                guides.add(rv);
+            }
+            return guides;
+        } catch(SQLException e) {
+            System.out.println("Query failed: " + e.getMessage());
+            return null;
+        }
     }
 }

@@ -19,7 +19,6 @@ HireDate DATE );
     private String postalCode;
     private String phone;
 
-
     public String getGuideNum() {
         return guideNum;
     }

@@ -1,4 +1,8 @@
 public class TripGuides {
+    /*
+    * (TripID DECIMAL(3,0),
+GuideNum CHAR(4),
+PRIMARY KEY (TripID, GuideNum) );*/
 
     private double tripID;
     private String guideNum;

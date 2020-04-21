@@ -11,19 +11,15 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Enter Costumer Num");
-        String customerNumber = input.next();
-
         Datasource datasource = new Datasource();
         if(!datasource.open()) {
             System.out.println("Can't open datasource");
             return;
         }
-
         List<Trip> trip = datasource.getTrip();
         List<Customer> customers = datasource.getCustomers();
         List<Reservation> reservations = datasource.getReservations();
-
+        List<Guide> guides = datasource.getGuide();
 
         int selection = 0;
         while (selection != EXIT) { // It will not stop the program until you enter 4 which is the exit.
@@ -34,6 +30,8 @@ public class Main {
             selection = input.nextInt();
             switch (selection) {
                 case 1:
+                    System.out.println("Enter Costumer Num");
+                    String customerNumber = input.next();
                     if (trip == null && customers == null && reservations == null) {
                         System.out.println("No trips!");
                         return;
@@ -49,22 +47,50 @@ public class Main {
                                     System.out.print(ct.getCustomerNum() + " " + tr.getTripName() + " " + " " + rv.getTripDate() + "\n");
                                 }else if(customerNumber.equals("*")){
                                     System.out.print(ct.getCustomerNum() + " " + tr.getTripName() + " " + " " + rv.getTripDate() + "\n");
-                                } else if(!ct.getCustomerNum().equals(customerNumber)) {
+                                } else if(!(ct.getCustomerNum().equals(customerNumber))) {
                                     System.out.println("No such customer");
                                 }
                             }
-
                         }
-
                     }
 
                     datasource.close();
                     // 1.	Show trips made by a customer.
                     break;
                 case 2:
+                    System.out.printf("%-15s%-15s%n", "TripName", "TotalRevenue");
+                    System.out.printf("%-15s%-15s%n", "--------", "-----------");
+                    for (Trip tr : trip) {
+                        for (Reservation rv : reservations) {
+                            System.out.print(tr.getTripName() + " " + " " + rv.getTripDate() + "\n");
+                        }
+                    }
                     // 2.	Show top five tours with most revenue. The revenue is calculated by adding the trip price and other fees for each reservation.
                     break;
                 case 3:
+                    System.out.println("Enter Costumer Num");
+                    String customerNum = input.next();
+                    if (trip == null && customers == null && reservations == null) {
+                        System.out.println("No trips!");
+                        return;
+                    }
+
+                    System.out.printf("%-16s%-15s%-15s%n", "CustomerNum", "GuideName", "TripDate");
+                    System.out.printf("%-16s%-15s%-15s%n", "---------", "--------", "---------");
+
+                    for (Customer ct : customers){
+                        for (Guide gd : guides) {
+                            for (Reservation rv : reservations) {
+                                if(ct.getCustomerNum().equals(customerNum)) {
+                                    System.out.print(ct.getCustomerNum() + " " + gd.getFirstName() + " " + " " + rv.getTripDate() + "\n");
+                                } else if(!(ct.getCustomerNum().equals(customerNum))) {
+                                    System.out.println("No such customer");
+                                }
+                            }
+                        }
+                    }
+
+                    datasource.close();
                     // 3.	Show customers and guides who led tours for the customer.
                     break;
                 case 4:
@@ -74,9 +100,6 @@ public class Main {
                     System.out.println("Your choice doesn't exist ");
             }
         }
-
-
-
     }
     // Method that print the Header
     public static void printHeader(){
@@ -93,7 +116,7 @@ public class Main {
     }
     // Method that exit the program
     public static void exit() {
-        System.out.println("Goodbye. Thanks for using MyLastNamesTourCompany ");
+        System.out.println("Goodbye. Thanks for using PeraltaTourCompany ");
         System.exit(0);
     }
 }

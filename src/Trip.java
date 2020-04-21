@@ -1,5 +1,15 @@
 public class Trip {
 
+    /*
+    * (TripID DECIMAL(3,0) PRIMARY KEY,
+TripName CHAR(75),
+StartLocation CHAR(50),
+State CHAR(2),
+Distance DECIMAL(4,0),
+MaxGrpSize DECIMAL(4,0),
+Type CHAR(20),
+Season CHAR(20) );
+    * */
     private double tripID;
     private String tripName;
     private String startLocation;
